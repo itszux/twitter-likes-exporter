@@ -4,8 +4,6 @@ Hacky Python scripts for downloading your Twitter likes and converting to HTML. 
 
 ![example output rendered html of tweets](example_html_output.png)
 
-Note only currently supports grabbing the liked tweet. So if it was a quote tweet, does not download the RT'd tweet. If it's a reply or part of a thread, does not download the other tweets.
-
 Meant to jumpstart you to at least getting your tweets offline from Twitter, if not building something much better!
 
 ## Setup
@@ -53,14 +51,53 @@ The output JSON will be a list of dictionaries like the following:
 ```json
 [
    {
-      "tweet_id": "780770946428829696",
-      "user_id": "265447323",
-      "user_handle": "LeahTiscione",
-      "user_name": "Leah Tiscione",
-      "user_avatar_url": "https://pbs.twimg.com/profile_images/1563330281838284805/aUtIY2vj_normal.jpg",
-      "tweet_content":"What are you hiding in your locked instagram? sandwiches? Sunsets???? let us see your nephew!!!!",
-      "tweet_media_urls": [],
-      "tweet_created_at": "Sun Mar 13 15:16:45 +0000 2011"
+      "tweet_info": {
+         "tweet_id": "",
+         "tweet_content": "",
+         "tweet_media_urls": [
+            {
+               "type": "video",
+               "url": "",
+               "url_small": "",
+               "video_duration_millis": 22583
+            }
+         ],
+         "entities": {
+            "hashtags": [
+               {
+                  "indices": [5, 10],
+                  "text": ""
+               }
+            ],
+            "symbols": [],
+            "timestamps": [],
+            "urls": [],
+            "user_mentions": []
+         },
+         "tweet_created_at": "Mon Jan 15 15:38:47 +0000 2024",
+         "tweet_views": "95715",
+         "tweet_favorite_count": 647,
+         "tweet_bookmark_count": 10,
+         "tweet_reply_count": 403,
+         "tweet_retweet_quote_count": 127,
+         "is_quote": false,
+         "quoted_url": null,
+         "is_reply": false,
+         "reply_url": null,
+         "nsfw": false
+      },
+      "user_info": {
+         "user_id": "",
+         "user_handle": "",
+         "user_name": "",
+         "user_avatar_url": "",
+         "user_blue_verified": true
+      },
+      "interactions": {
+         "bookmarked": false,
+         "favorited": true,
+         "retweeted": false
+      }
    }
 ]
 ```
@@ -79,4 +116,4 @@ NOTE: This will attempt to download all media images and tweet author avatars lo
 python parse_tweets_json_to_html.py
 ```
 
-This will download all images (if specified; saved to `tweet_likes_html/images`) and construct an HTML file at `tweet_likes_html/index.html` containing all liked tweets, as well as individual HTML files within `tweet_likes_html/tweets/`.
+This will download all images (if specified; saved to `tweet_likes_html/images`) and construct an HTML file at `tweet_likes_html/index.html` containing all liked tweets.

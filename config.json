@@ -4,5 +4,7 @@
     "HEADER_COOKIES": "cookies_from_request",
     "HEADER_CSRF": "csrf_from_request",
     "OUTPUT_JSON_FILE_PATH": "liked_tweets.json",
-    "DOWNLOAD_IMAGES": true
+    "DOWNLOAD_IMAGES": false,
+    "AUTO_OPEN_HTML_FILE": false,
+    "TWEETS_PER_PAGE": 50
 }
