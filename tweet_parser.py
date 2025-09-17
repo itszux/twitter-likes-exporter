@@ -20,6 +20,7 @@ class TweetParser():
             "tweet_info": {
                 "tweet_id": self.key_data["legacy"]["id_str"],
                 "tweet_content": self.key_data["legacy"]["full_text"],
+                "post_description": self.post_description,
                 "tweet_media_urls": self.media_urls,
                 "entities": self.entities,
                 "tweet_created_at": self.key_data["legacy"]["created_at"],
@@ -36,9 +37,9 @@ class TweetParser():
             },
             "user_info": {
                 "user_id": self.key_data["legacy"]["user_id_str"],
-                "user_handle": self.user_data["legacy"]["screen_name"],
-                "user_name": self.user_data["legacy"]["name"],
-                "user_avatar_url": self.user_data["legacy"]["profile_image_url_https"],
+                "user_handle": self.user_data["core"]["screen_name"],
+                "user_name": self.user_data["core"]["name"],
+                "user_avatar_url": self.user_data["avatar"]["image_url"],
                 "user_blue_verified": self.user_data["is_blue_verified"],
             },
             "interactions": {
@@ -51,6 +52,16 @@ class TweetParser():
     @property
     def user_data(self):
         return self.key_data["core"]["user_results"]["result"]
+
+    @property
+    def post_description(self):
+        post_description_root = self.raw_tweet_json["content"]["itemContent"]["tweet_results"]["result"]
+        if post_description_root.get('post_image_description', None):
+            return post_description_root['post_image_description']
+        elif post_description_root.get('post_video_description', None):
+            return post_description_root['post_video_description']
+        else:
+            return None
 
     @property
     def get_quoted(self):

@@ -125,6 +125,11 @@ class ParseTweetsJSONtoHTML():
         if current_index < len(tweet_content):
             new_tweet_content += tweet_content[current_index:]
 
+        # Escaping double and single quotes
+        if tweet_data["tweet_info"]["post_description"]:
+            title = self.parse_text_for_html(tweet_data["tweet_info"]["post_description"].replace('"', '&quot;').replace("\\'", "\'"))
+        else:
+            title = ""
 
         tweet_skeleton = f'''
             <div class="tweet_wrapper">
@@ -151,7 +156,8 @@ class ParseTweetsJSONtoHTML():
                         </div>
                     </div>
                     <div class="tweet_content">{self.parse_text_for_html(new_tweet_content)}</div>
-                    <div class="tweet_images_wrapper {numbers[len(tweet_data["tweet_info"]["tweet_media_urls"])]}">
+                    <div class="tweet_images_wrapper {numbers[len(tweet_data["tweet_info"]["tweet_media_urls"])]}" 
+                        title="{title}">
                         {all_media}
                     </div>
                     <div class="reply-to {'true' if tweet_data['tweet_info']['is_reply'] else 'false'}">
@@ -339,8 +345,8 @@ class ParseTweetsJSONtoHTML():
 
 if __name__ == "__main__":
     parser = ParseTweetsJSONtoHTML()
-    # print(f"Saving tweets to {parser.output_index_path}...")
-    # parser.write_tweets_to_html()
-    # print(f"Done. Output file located at {parser.output_index_path}")
+    print(f"Saving tweets to {parser.output_index_path}...")
+    parser.write_tweets_to_html()
+    print(f"Done. Output file located at {parser.output_index_path}")
     if parser.auto_open:
         os.startfile(parser.output_index_path)
